@@ -34,12 +34,11 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
 
     def test_can_read_feature_file(self):
         returned_text = self.file_processor.read_file(self.simple_file_path)
-        assert self.file_processor.file_text == self.simple_file
         assert returned_text == self.simple_file
 
     def test_create_scenarios_objects(self):
-        self.file_processor.read_file(self.simple_file_path)
-        self.file_processor.create_scenarios()
+        text = self.file_processor.read_file(self.simple_file_path)
+        self.file_processor.create_scenarios(text)
         feature_file = self.file_processor.parsed_feature()
         self.assertIsInstance(feature_file, FeatureFile)
         self.assertEqual(feature_file.feature_title(), self.feature_title)

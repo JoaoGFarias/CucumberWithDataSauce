@@ -6,33 +6,31 @@ class FeatureFileProcessor(object):
 
     def __init__(self, base_path):
         self.base_path = base_path
-        self.file_text = None
-        self.scenarios = []
-        self.feature_file = []
-        self.feature_title = None
+        self.feature_file = None
 
     def read_file(self, file_path):
         with open(os.path.join(self.base_path, file_path)) as file:
-            self.file_text = [line.strip() for line in file.read().splitlines() if line]
-        return self.file_text
+            return [line.strip() for line in file.read().splitlines() if line]
     
     def parsed_feature(self):
         return self.feature_file
 
-    def create_scenarios(self):
+    def create_scenarios(self, text):
         current_scenario = []
-        for line in self.file_text:
+        scenarios = []
+        feature_title = ""
+        for line in text:
             if self.__is_scenario(line):
                 if current_scenario != []:
-                    self.scenarios.append(current_scenario)
+                    scenarios.append(current_scenario)
                 current_scenario = [line]
             elif self.__is_feature(line):
-                self.feature_title = line
+                feature_title = line
             else:
                 # It is a step
                 current_scenario.append(line)
-        self.scenarios.append(current_scenario)
-        self.feature_file = FeatureFile(title=self.feature_title, file_scenarios=self.scenarios)
+        scenarios.append(current_scenario)
+        self.feature_file = FeatureFile(title=feature_title, file_scenarios=scenarios)
         return self.feature_file
 
     def __is_scenario(self, line):
