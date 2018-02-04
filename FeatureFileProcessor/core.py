@@ -26,8 +26,7 @@ class FeatureFileProcessor(object):
             else:
                 # It is a step
                 current_scenario.append(line)
-        if current_scenario != []:
-            self.scenarios.append(current_scenario)
+        self.scenarios.append(current_scenario)
 
     def __is_scenario(self, line):
         return line.startswith("Scenario:")

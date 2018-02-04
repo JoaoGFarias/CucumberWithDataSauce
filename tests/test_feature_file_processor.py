@@ -40,6 +40,7 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.file_processor.read_file(self.simple_file_path)
         self.file_processor.create_scenarios()
         assert self.file_processor.feature_title == self.feature_title
+        assert len(self.file_processor.scenarios) == 2
         assert self.file_processor.scenarios[0] == self.first_scenario
         assert self.file_processor.scenarios[1] == self.second_scenario
 
