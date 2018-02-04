@@ -39,10 +39,15 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
     def test_create_scenarios_objects(self):
         self.file_processor.read_file(self.simple_file_path)
         self.file_processor.create_scenarios()
-        assert self.file_processor.feature_title == self.feature_title
-        assert len(self.file_processor.scenarios) == 2
-        assert self.file_processor.scenarios[0] == self.first_scenario
-        assert self.file_processor.scenarios[1] == self.second_scenario
+        feature_file = self.file_processor.parsed_feature()
+        assert type(feature_file) is FeatureFile
+        assert feature_file.feature_title == self.feature_title
+        assert feature_file.number_of_scenarios() == 2
+        assert type(feature_file.scenario_at(1)) is Scenario
+        assert feature_file.scenario_at(1) == self.first_scenario
+        assert type(feature_file.scenario_at(2)) is Scenario
+        assert feature_file.scenario_at(2) == self.second_scenario
 
 if __name__ == '__main__':
     unittest.main()
+    
