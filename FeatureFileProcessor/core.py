@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from .file_models.feature_file import FeatureFile
 
 class FeatureFileProcessor(object):
 
@@ -7,12 +8,16 @@ class FeatureFileProcessor(object):
         self.base_path = base_path
         self.file_text = None
         self.scenarios = []
+        self.feature_file = []
         self.feature_title = None
 
     def read_file(self, file_path):
         with open(os.path.join(self.base_path, file_path)) as file:
             self.file_text = [line.strip() for line in file.read().splitlines() if line]
         return self.file_text
+    
+    def parsed_feature(self):
+        return self.feature_file
 
     def create_scenarios(self):
         current_scenario = []
@@ -27,6 +32,8 @@ class FeatureFileProcessor(object):
                 # It is a step
                 current_scenario.append(line)
         self.scenarios.append(current_scenario)
+        self.feature_file = FeatureFile(title=self.feature_title, file_scenarios=self.scenarios)
+        return self.feature_file
 
     def __is_scenario(self, line):
         return line.startswith("Scenario:")
