@@ -14,6 +14,4 @@ class Scenario(object):
         try:
             return self.csv[0]
         except IndexError as e:
-            raise NoDataFileException
-            pass
-        
+            raise NoDataFileException        
