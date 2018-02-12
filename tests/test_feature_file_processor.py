@@ -57,5 +57,9 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertEqual(feature_file.scenario_at(2), self.second_scenario)
         self.assertEqual(feature_file.scenario_at(2).data_file(), self.second_scenario_data_file)
 
+    def test_deals_with_no_data_file(self):
+        #TODO - Verify that an exception is raised when there is no data file
+        pass
+        
 if __name__ == '__main__':
     nose.run()

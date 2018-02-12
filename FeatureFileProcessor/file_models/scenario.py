@@ -10,5 +10,6 @@ class Scenario(object):
         return self.scenario == other
     
     def data_file(self):
+        #TODO - Raise exception when there is no data file
         return self.csv
         
