@@ -6,6 +6,7 @@ from .context import Scenario
 import os
 
 import unittest
+from nose2dep.core import depends
 
 class FeatureFileProcessorTestSuite(unittest.TestCase):
 
@@ -34,8 +35,9 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
 
     def test_can_read_feature_file(self):
         returned_text = self.file_processor.read_file(self.simple_file_path)
-        assert returned_text == self.simple_file
+        self.assertEqual(returned_text, self.simple_file)
 
+    @depends(before=test_can_read_feature_file)
     def test_create_scenarios_objects(self):
         text = self.file_processor.read_file(self.simple_file_path)
         self.file_processor.create_scenarios(text)
