@@ -16,6 +16,7 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
     def setUpClass(self):
         self.base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
         self.simple_file_path = os.path.join("test_data", "simple_file.feature")
+        self.file_scenario_with_data_path = os.path.join("test_data", "file_scenario_with_data.feature")
         self.feature_title = 'Feature: Serve coffee'
         self.data_file_mark = Template("{!$file!}")
         self.first_scenario_data_file = "scenario_1_file"
@@ -56,10 +57,12 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertIsInstance(feature_file.scenario_at(2), Scenario)
         self.assertEqual(feature_file.scenario_at(2), self.second_scenario)
         self.assertEqual(feature_file.scenario_at(2).data_file(), self.second_scenario_data_file)
-
     def test_deals_with_no_data_file(self):
-        #TODO - Verify that an exception is raised when there is no data file
-        pass
+        text = self.file_processor.read_file(self.file_scenario_with_data_path)
+        self.file_processor.create_scenarios(text)
+        scenario = self.file_processor.parsed_feature().scenario_at(1)
+        with self.assertRaises(ScenarioWithoutDataFile, scenario.data_file()):
+            pass
         
 if __name__ == '__main__':
     nose.run()
