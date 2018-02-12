@@ -3,6 +3,7 @@
 from .context import FeatureFileProcessor
 from .context import FeatureFile
 from .context import Scenario
+from .context import NoDataFileException
 import os
 
 from string import Template
@@ -61,7 +62,10 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         text = self.file_processor.read_file(self.file_scenario_with_data_path)
         self.file_processor.create_scenarios(text)
         scenario = self.file_processor.parsed_feature().scenario_at(1)
-        with self.assertRaises(ScenarioWithoutDataFile, scenario.data_file()):
+        with self.assertRaises(NoDataFileException) as e:
+            scenario.data_file()
+            self.assertEqual(e.message, "No data file")
+            self.assertEqual(e.errors, [])
             pass
         
 if __name__ == '__main__':
