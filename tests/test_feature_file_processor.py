@@ -58,4 +58,4 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertEqual(feature_file.scenario_at(2).data_file(), self.second_scenario_data_file)
 
 if __name__ == '__main__':
-    unittest.main()
+    nose.run()
