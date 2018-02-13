@@ -17,7 +17,7 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
     def setUpClass(self):
         self.base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
         self.simple_file_path = os.path.join("test_data", "simple_file.feature")
-        self.file_scenario_with_data_path = os.path.join("test_data", "file_scenario_with_data.feature")
+        self.file_scenario_with_data_path = os.path.join("test_data", "file_scenario_without_data.feature")
         self.feature_title = 'Feature: Serve coffee'
         self.data_file_mark = Template("{!$file!}")
         self.first_scenario_data_file = "scenario_1_file"
