@@ -15,9 +15,11 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
-        self.simple_file_path = os.path.join("test_data", "simple_file.feature")
-        self.file_scenario_with_data_path = os.path.join("test_data", "file_scenario_without_data.feature")
+        self.base_path =  os.path.join(
+            os.path.abspath(os.path.join(os.path.dirname(__file__))),
+            "test_data")
+        self.simple_file_path = "simple_file.feature"
+        self.file_scenario_with_data_path = "file_scenario_without_data.feature"
         self.feature_title = 'Feature: Serve coffee'
         self.data_file_mark = Template("{!$file!}")
         self.first_scenario_data_file = "scenario_1_file"
@@ -59,6 +61,7 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertEqual(feature_file.scenario_at(2), self.second_scenario)
         self.assertEqual(feature_file.scenario_at(2).data_file(), self.second_scenario_data_file)
     
+    @depends(before=test_can_read_feature_file)
     def test_deals_with_no_data_file(self):
         text = self.file_processor.read_file(self.file_scenario_with_data_path)
         self.file_processor.create_scenarios(text)
@@ -68,18 +71,30 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
             self.assertEqual(e.message, "No data file")
             self.assertEqual(e.errors, [])
 
+    # TODO - Update to scenario outline
     def test_reads_data_file(self):
         scenario = Scenario(self.first_scenario)
-        expected_table = {
-            "button_label": [
-                "First Button Label",
-                "Second Button Label"
-            ],
-            "coffe_label": [
-                "First Coffee Label",
-                "Second Coffee Label",
-            ]}
-        self.assertEqual(scenario.data_table(), expected_table)
+        expected_table = [
+            ["button_label", "coffe_label"],
+            ["First Button Label", "First Coffee Label"],
+            ["Second Button Label", "Second Coffee Label"]
+        ]
+
+        self.assertListEqual(scenario.data_table(self.base_path), expected_table)
+    
+    # TODO - Update to scenario outline
+    @depends(before=test_can_read_feature_file)
+    def test_prints_with_data_table(self):
+        printable_scenario = Scenario(self.first_scenario).printable_scenario()
+        expected_scenario = Scenario(
+            self.first_scenario + 
+            ["Examples:"] + 
+            ["|\tbutton_label\t|\tcoffe_label\t|"] +
+            ["|\tFirst Button Label\t|\tFirst Coffee Label\t|"] +
+            ["|\tSecond Button Label\t|\tSecond Coffee Label\t|"]
+            )
+        self.assertEqual(printable_scenario, expected_scenario)
+
         
 if __name__ == '__main__':
     nose.run()
