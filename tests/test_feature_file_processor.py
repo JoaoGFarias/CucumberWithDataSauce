@@ -73,28 +73,27 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
 
     # TODO - Update to scenario outline
     def test_reads_data_file(self):
-        scenario = Scenario(self.first_scenario)
+        scenario = Scenario(self.first_scenario, self.base_path)
         expected_table = [
             ["button_label", "coffe_label"],
             ["First Button Label", "First Coffee Label"],
             ["Second Button Label", "Second Coffee Label"]
         ]
 
-        self.assertListEqual(scenario.data_table(self.base_path), expected_table)
+        self.assertListEqual(scenario.data_table(), expected_table)
     
     # TODO - Update to scenario outline
     @depends(before=test_can_read_feature_file)
     def test_prints_with_data_table(self):
-        printable_scenario = Scenario(self.first_scenario).printable_scenario()
+        printable_scenario = Scenario(self.first_scenario, self.base_path).printable_scenario()
         expected_scenario = Scenario(
             self.first_scenario + 
             ["Examples:"] + 
             ["|\tbutton_label\t|\tcoffe_label\t|"] +
             ["|\tFirst Button Label\t|\tFirst Coffee Label\t|"] +
-            ["|\tSecond Button Label\t|\tSecond Coffee Label\t|"]
-            )
-        self.assertEqual(printable_scenario, expected_scenario)
-
+            ["|\tSecond Button Label\t|\tSecond Coffee Label\t|"],
+            self.base_path)
+        self.assertEqual(expected_scenario, printable_scenario)
         
 if __name__ == '__main__':
     nose.run()

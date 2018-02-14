@@ -30,7 +30,10 @@ class FeatureFileProcessor(object):
                 # It is a step
                 current_scenario.append(line)
         scenarios.append(current_scenario)
-        self.feature_file = FeatureFile(title=feature_title, file_scenarios=scenarios)
+        self.feature_file = FeatureFile(
+            title=feature_title,
+            file_scenarios=scenarios,
+            data_path = self.base_path)
         return self.feature_file
 
     def __is_scenario(self, line):
