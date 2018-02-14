@@ -1,6 +1,7 @@
 import re
 import os
 import csv
+import copy
 
 from ..exceptions.no_data_file_exception import NoDataFileException
 
@@ -28,7 +29,11 @@ class Scenario(object):
             return list(reader)
 
     def printable_scenario(self):
-        scenario_outline = self.data_table()
+        try:
+            scenario_outline = self.data_table()
+        except NoDataFileException:
+            return copy.deepcopy(self.scenario)
+            
         rows = ["Examples:"]
         for row in scenario_outline:
             rows.append("|\t" + '\t|\t'.join(row) + "\t|")

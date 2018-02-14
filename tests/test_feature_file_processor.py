@@ -38,6 +38,12 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
             "Then I should be served a coffee"
         ]
         self.simple_file = [self.feature_title] + self.first_scenario + self.second_scenario
+        self.scenario_witout_data = [
+            "Scenario: Buy last coffee",
+            "Given there are 1 coffees left in the machine",
+            "And I have deposited 1$",
+            "When I press the coffee button",
+            "Then I should be served a coffee"]
 
     def setUp(self):
         self.file_processor = FeatureFileProcessor(self.base_path)
@@ -94,6 +100,12 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
             ["|\tSecond Button Label\t|\tSecond Coffee Label\t|"],
             self.base_path)
         self.assertEqual(expected_scenario, printable_scenario)
+    
+    @depends(before=test_can_read_feature_file)
+    def test_prints_without_scenario_outline(self):
+        scenario = Scenario(self.scenario_witout_data, self.base_path)
+        printable_scenario = scenario.printable_scenario()
+        self.assertEqual(scenario, printable_scenario)
         
 if __name__ == '__main__':
     nose.run()
