@@ -58,6 +58,7 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertIsInstance(feature_file.scenario_at(2), Scenario)
         self.assertEqual(feature_file.scenario_at(2), self.second_scenario)
         self.assertEqual(feature_file.scenario_at(2).data_file(), self.second_scenario_data_file)
+    
     def test_deals_with_no_data_file(self):
         text = self.file_processor.read_file(self.file_scenario_with_data_path)
         self.file_processor.create_scenarios(text)
@@ -66,7 +67,19 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
             scenario.data_file()
             self.assertEqual(e.message, "No data file")
             self.assertEqual(e.errors, [])
-            pass
+
+    def test_reads_data_file(self):
+        scenario = Scenario(self.first_scenario)
+        expected_table = {
+            "button_label": [
+                "First Button Label",
+                "Second Button Label"
+            ],
+            "coffe_label": [
+                "First Coffee Label",
+                "Second Coffee Label",
+            ]}
+        self.assertEqual(scenario.data_table(), expected_table)
         
 if __name__ == '__main__':
     nose.run()
