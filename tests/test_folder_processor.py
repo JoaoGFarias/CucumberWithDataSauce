@@ -30,3 +30,4 @@ class FolderProcessorTestSuite(unittest.TestCase):
         self.file_processor.prepare_target_folder()
         self.file_processor.process_data_folder()
         self.assertEqual(len(os.listdir(self.target_path)), 2)
+        
