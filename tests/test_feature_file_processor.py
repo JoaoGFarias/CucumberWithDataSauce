@@ -76,19 +76,17 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
             scenario.data_file()
             self.assertEqual(e.message, "No data file")
             self.assertEqual(e.errors, [])
-
-    # TODO - Update to scenario outline
-    def test_reads_data_file(self):
+            
+    def test_reads_outline(self):
         scenario = Scenario(self.first_scenario, self.base_path)
-        expected_table = [
+        expected_outline = [
             ["button_label", "coffe_label"],
             ["First Button Label", "First Coffee Label"],
             ["Second Button Label", "Second Coffee Label"]
         ]
 
-        self.assertListEqual(scenario.data_table(), expected_table)
+        self.assertListEqual(scenario.outline(), expected_outline)
     
-    # TODO - Update to scenario outline
     @depends(before=test_can_read_feature_file)
     def test_prints_with_data_table(self):
         printable_scenario = Scenario(self.first_scenario, self.base_path).printable_scenario()

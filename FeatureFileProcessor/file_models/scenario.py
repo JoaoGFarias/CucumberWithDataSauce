@@ -21,8 +21,7 @@ class Scenario(object):
         except IndexError as e:
             raise NoDataFileException
     
-    # TODO - Update to scenario outline
-    def data_table(self):
+    def outline(self):
         file_name = self.data_file()
         with open(os.path.join(self.data_path, file_name + ".csv"), newline='') as file:
             reader = csv.reader(file)
@@ -30,7 +29,7 @@ class Scenario(object):
 
     def printable_scenario(self):
         try:
-            scenario_outline = self.data_table()
+            scenario_outline = self.outline()
         except NoDataFileException:
             return copy.deepcopy(self.scenario)
             
