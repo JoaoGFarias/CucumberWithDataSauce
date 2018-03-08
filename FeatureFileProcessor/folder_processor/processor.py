@@ -1,5 +1,6 @@
 import shutil
 import os
+from pathlib import Path
 
 class FolderProcessor(object):
 
@@ -13,4 +14,12 @@ class FolderProcessor(object):
         except FileNotFoundError as e:
             pass
         os.makedirs(self.target_folder)
+        pass
+    
+    def process_data_folder(self):
+        for path in Path(self.data_folder).glob('**/*.feature'):
+            try:
+                shutil.copy(path, self.target_folder)
+            except shutil.SameFileError as e:
+                continue
         pass
