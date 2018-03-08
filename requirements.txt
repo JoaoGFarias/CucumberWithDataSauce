@@ -1,3 +1,6 @@
 nose
+nose-watch
+nose2dep
+nose-timer
 sphinx
 coverage

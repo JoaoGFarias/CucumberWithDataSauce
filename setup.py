@@ -18,6 +18,6 @@ setup(
     author_email='jgfarias42@gmail.com',
     url='https://github.com/JoaoGFarias/PyCPD',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs', 'sample'))
 )
 
