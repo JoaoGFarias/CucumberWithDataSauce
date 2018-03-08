@@ -23,3 +23,4 @@ class FolderProcessor(object):
             except shutil.SameFileError as e:
                 continue
         pass
+        
