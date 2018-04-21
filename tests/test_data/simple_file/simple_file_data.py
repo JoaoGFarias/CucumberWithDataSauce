@@ -1,26 +1,16 @@
-from string import Template
-from functools import reduce
 import os
+from ..file_data import FileData
 
-class SimpleFileData(object):
+class SimpleFileData(FileData):
     def __init__(self, base_path):
-        self.base_path = os.path.join(base_path, 'simple_file')
+        dir_name = os.path.dirname(__file__)
+        FileData.__init__(self, base_path, dir_name, 'simple_file')
 
     def name(self):
         return "simple_file.feature"
-    
-    def file_path(self):
-        folder_path = os.path.join(
-                        os.path.abspath(
-                            os.path.join(
-                                os.path.dirname(__file__))))
-        return os.path.join(folder_path, self.name())
 
     def number_of_scenarios(self):
         return 2
-
-    def data_file_mark(self):
-        return Template("{!$file!}")
     
     def csv_file(self, scenario_number):
         return {
@@ -72,7 +62,3 @@ class SimpleFileData(object):
         return {
             1: self.first_scenario_printable_table(),
         }[scenario_position]
-    
-    def feature_text(self):
-        scenarios = reduce( lambda x, y: x + self.scenario_text(y) ,range(1, self.number_of_scenarios() + 1), [])
-        return [self.feature_title()] + scenarios
