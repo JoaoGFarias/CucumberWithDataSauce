@@ -2,6 +2,7 @@
 import os
 from .file_models.feature_file import FeatureFile
 
+
 class FeatureFileProcessor(object):
 
     def __init__(self, base_path):
@@ -11,7 +12,7 @@ class FeatureFileProcessor(object):
     def read_file(self, file_path):
         with open(os.path.join(self.base_path, file_path)) as file:
             return [line.strip() for line in file.read().splitlines() if line]
-    
+
     def parsed_feature(self):
         return self.feature_file
 
@@ -33,7 +34,7 @@ class FeatureFileProcessor(object):
         self.feature_file = FeatureFile(
             title=feature_title,
             file_scenarios=scenarios,
-            data_path = self.base_path)
+            data_path=self.base_path)
         return self.feature_file
 
     def __is_scenario(self, line):

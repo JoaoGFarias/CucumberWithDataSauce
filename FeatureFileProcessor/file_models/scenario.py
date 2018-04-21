@@ -5,6 +5,7 @@ import copy
 
 from ..exceptions.no_data_file_exception import NoDataFileException
 
+
 class Scenario(object):
 
     def __init__(self, scenario, data_path):
@@ -14,13 +15,13 @@ class Scenario(object):
 
     def __eq__(self, other):
         return self.scenario == other
-    
+
     def data_file(self):
         try:
             return self.csv[0]
         except IndexError as e:
             raise NoDataFileException
-    
+
     def outline(self):
         file_name = self.data_file()
         with open(os.path.join(self.data_path, file_name + ".csv"), newline='') as file:
@@ -32,7 +33,7 @@ class Scenario(object):
             scenario_outline = self.outline()
         except NoDataFileException:
             return copy.deepcopy(self.scenario)
-            
+
         rows = ["Examples:"]
         for row in scenario_outline:
             rows.append("|\t" + '\t|\t'.join(row) + "\t|")

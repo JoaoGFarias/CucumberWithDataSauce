@@ -1,6 +1,7 @@
 import os
 from ..file_data import FileData
 
+
 class WithoutDataFile(FileData):
     def __init__(self, base_path):
         dir_name = os.path.dirname(__file__)
@@ -8,7 +9,7 @@ class WithoutDataFile(FileData):
 
     def name(self):
         return "file_scenario_without_data.feature"
-    
+
     def number_of_scenarios(self):
         return 1
 
@@ -22,7 +23,7 @@ class WithoutDataFile(FileData):
             "And I have deposited 1$",
             "When I press the coffee button",
             "Then I should be served a coffee"]
-    
+
     def scenario_text(self, scenario_position):
         return {
             1: self.first_scenario(),

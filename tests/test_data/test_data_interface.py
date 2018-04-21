@@ -2,6 +2,7 @@ import os
 from .simple_file.simple_file_data import SimpleFileData
 from .without_data_file.without_data_file import WithoutDataFile
 
+
 class TestDataInterface(object):
 
     def __init__(self):
