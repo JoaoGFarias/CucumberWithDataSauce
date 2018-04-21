@@ -4,40 +4,26 @@ from .context import FeatureFileProcessor
 from .context import FeatureFile
 from .context import Scenario
 from .context import NoDataFileException
-import os
-
-from string import Template
-
 import unittest
 from nose2dep.core import depends
+
+from .test_data.test_data_interface import TestDataInterface
 
 class FeatureFileProcessorTestSuite(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.base_path =  os.path.join(
-            os.path.abspath(os.path.join(os.path.dirname(__file__))),
-            "test_data")
-        self.simple_file_path = "simple_file.feature"
+        self.testData = TestDataInterface()
+        self.simpleFileData = self.testData.getFileData(self.testData.SIMPLE_FILE_DATA)
+        self.base_path =  self.testData.base_path
+        self.simple_file_path = self.simpleFileData.file_path()
         self.file_scenario_with_data_path = "file_scenario_without_data.feature"
-        self.feature_title = 'Feature: Serve coffee'
-        self.data_file_mark = Template("{!$file!}")
-        self.first_scenario_data_file = "scenario_1_file"
-        self.first_scenario = [
-            "Scenario: Buy last coffee" + self.data_file_mark.substitute(file=self.first_scenario_data_file),
-            "Given there are 1 coffees left in the machine",
-            "And I have deposited 1$",
-            "When I press the coffee button",
-            "Then I should be served a coffee"]
-        self.second_scenario_data_file = "scenario_2_file"
-        self.second_scenario = [
-            "Scenario: Buy first coffee " +  self.data_file_mark.substitute(file=self.second_scenario_data_file),
-            "Given there are 2 coffees left in the machine",
-            "And I have deposited 1$",
-            "When I press the coffee button",
-            "Then I should be served a coffee"
-        ]
-        self.simple_file = [self.feature_title] + self.first_scenario + self.second_scenario
+        self.feature_title = self.simpleFileData.feature_title()
+        self.data_file_mark = self.simpleFileData.data_file_mark()
+        self.first_scenario = self.simpleFileData.first_scenario()
+        self.second_scenario_data_file = self.simpleFileData.csv_file(scenario_number = 2)
+        self.second_scenario = self.simpleFileData.second_scenario()
+        self.simple_file = self.simpleFileData.feature_text()
         self.scenario_witout_data = [
             "Scenario: Buy last coffee",
             "Given there are 1 coffees left in the machine",
@@ -59,14 +45,12 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         feature_file = self.file_processor.parsed_feature()
         self.assertIsInstance(feature_file, FeatureFile)
         self.assertEqual(feature_file.feature_title(), self.feature_title)
-        self.assertEqual(feature_file.number_of_scenarios(), 2)
-        self.assertIsInstance(feature_file.scenario_at(1), Scenario)
-        self.assertEqual(feature_file.scenario_at(1), self.first_scenario)
-        self.assertEqual(feature_file.scenario_at(1).data_file(), self.first_scenario_data_file)
-        self.assertIsInstance(feature_file.scenario_at(2), Scenario)
-        self.assertEqual(feature_file.scenario_at(2), self.second_scenario)
-        self.assertEqual(feature_file.scenario_at(2).data_file(), self.second_scenario_data_file)
-    
+        self.assertEqual(feature_file.number_of_scenarios(), self.simpleFileData.number_of_scenarios())
+        for scenario_number in range(1, self.simpleFileData.number_of_scenarios()):
+            self.assertIsInstance(feature_file.scenario_at(scenario_number), Scenario)
+            self.assertEqual(feature_file.scenario_at(scenario_number), self.simpleFileData.scenario_text(scenario_number))
+            self.assertEqual(feature_file.scenario_at(scenario_number).data_file(), self.simpleFileData.csv_file(scenario_number))
+        
     @depends(before=test_can_read_feature_file)
     def test_deals_with_no_data_file(self):
         text = self.file_processor.read_file(self.file_scenario_with_data_path)
@@ -78,24 +62,17 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
             self.assertEqual(e.errors, [])
             
     def test_reads_outline(self):
-        scenario = Scenario(self.first_scenario, self.base_path)
-        expected_outline = [
-            ["button_label", "coffe_label"],
-            ["First Button Label", "First Coffee Label"],
-            ["Second Button Label", "Second Coffee Label"]
-        ]
+        scenario_position = 1
+        scenario = self.__create_scenario_at_position__(scenario_position)
+        expected_outline = self.simpleFileData.outline_text(scenario_position)
 
         self.assertListEqual(scenario.outline(), expected_outline)
     
     @depends(before=test_can_read_feature_file)
     def test_prints_with_data_table(self):
-        printable_scenario = Scenario(self.first_scenario, self.base_path).printable_scenario()
+        printable_scenario = self.__create_scenario_at_position__(1).printable_scenario()
         expected_scenario = Scenario(
-            self.first_scenario + 
-            ["Examples:"] + 
-            ["|\tbutton_label\t|\tcoffe_label\t|"] +
-            ["|\tFirst Button Label\t|\tFirst Coffee Label\t|"] +
-            ["|\tSecond Button Label\t|\tSecond Coffee Label\t|"],
+            self.simpleFileData.printable_table_text(1),
             self.base_path)
         self.assertEqual(expected_scenario, printable_scenario)
     
@@ -104,6 +81,9 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         scenario = Scenario(self.scenario_witout_data, self.base_path)
         printable_scenario = scenario.printable_scenario()
         self.assertEqual(scenario, printable_scenario)
+
+    def __create_scenario_at_position__(self, scenario_position):
+        return Scenario(self.simpleFileData.scenario_text(scenario_position), self.base_path)
         
 if __name__ == '__main__':
     nose.run()

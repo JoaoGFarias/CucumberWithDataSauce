@@ -4,14 +4,14 @@ import os
 import unittest
 from nose2dep.core import depends
 import shutil
+from .test_data.test_data_interface import TestDataInterface
 
 class FolderProcessorTestSuite(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        self.base_path = os.path.join(
-            os.path.abspath(os.path.join(os.path.dirname(__file__))),
-            "test_data")
-        self.target_path = os.path.join(self.base_path, "target_data")
+        self.testData = TestDataInterface()
+        self.base_path =  self.testData.base_path
+        self.target_path = self.testData.target_path
     
     def setUp(self):
         self.file_processor = FolderProcessor(data_folder = self.base_path, target_folder = self.target_path)
