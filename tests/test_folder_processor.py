@@ -19,7 +19,10 @@ class FolderProcessorTestSuite(unittest.TestCase):
             data_folder=self.base_path, target_folder=self.target_path)
 
     def tearDown(self):
-        shutil.rmtree(self.target_path)
+        try:
+            shutil.rmtree(self.target_path)
+        except FileNotFoundError as e:
+            pass
 
     def test_prepare_target_folder(self):
         self.file_processor.prepare_target_folder()
@@ -32,3 +35,9 @@ class FolderProcessorTestSuite(unittest.TestCase):
         self.file_processor.prepare_target_folder()
         self.file_processor.process_data_folder()
         self.assertEqual(len(os.listdir(self.target_path)), 2)
+
+    @depends(before=test_prepare_target_folder)
+    def test_deletes_target_folder(self):
+        self.file_processor.prepare_target_folder()
+        self.file_processor.delete_target_folder()
+        self.assertFalse(os.path.exists(self.target_path))

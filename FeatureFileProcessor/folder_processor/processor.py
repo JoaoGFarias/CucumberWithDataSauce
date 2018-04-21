@@ -11,7 +11,7 @@ class FolderProcessor(object):
 
     def prepare_target_folder(self):
         try:
-            shutil.rmtree(self.target_folder)
+            self.delete_target_folder()
         except FileNotFoundError as e:
             pass
         os.makedirs(self.target_folder)
@@ -24,3 +24,6 @@ class FolderProcessor(object):
             except shutil.SameFileError as e:
                 continue
         pass
+    
+    def delete_target_folder(self):
+        shutil.rmtree(self.target_folder)
