@@ -3,6 +3,9 @@ from functools import reduce
 import os
 
 class SimpleFileData(object):
+    def __init__(self, base_path):
+        self.base_path = os.path.join(base_path, 'simple_file')
+
     def name(self):
         return "simple_file.feature"
     

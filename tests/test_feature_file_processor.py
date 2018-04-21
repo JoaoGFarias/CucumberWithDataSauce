@@ -15,21 +15,17 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
     def setUpClass(self):
         self.testData = TestDataInterface()
         self.simpleFileData = self.testData.getFileData(self.testData.SIMPLE_FILE_DATA)
-        self.base_path =  self.testData.base_path
+        self.base_path =  self.simpleFileData.base_path
         self.simple_file_path = self.simpleFileData.file_path()
-        self.file_scenario_with_data_path = "file_scenario_without_data.feature"
         self.feature_title = self.simpleFileData.feature_title()
         self.data_file_mark = self.simpleFileData.data_file_mark()
         self.first_scenario = self.simpleFileData.first_scenario()
         self.second_scenario_data_file = self.simpleFileData.csv_file(scenario_number = 2)
         self.second_scenario = self.simpleFileData.second_scenario()
         self.simple_file = self.simpleFileData.feature_text()
-        self.scenario_witout_data = [
-            "Scenario: Buy last coffee",
-            "Given there are 1 coffees left in the machine",
-            "And I have deposited 1$",
-            "When I press the coffee button",
-            "Then I should be served a coffee"]
+        self.withoutDataFile = self.testData.getFileData(self.testData.WITHOUT_DATA_FILE_DATA)
+        self.scenario_witout_data = self.withoutDataFile.scenario_text(1)
+        self.file_scenario_with_data_path = self.withoutDataFile.name()
 
     def setUp(self):
         self.file_processor = FeatureFileProcessor(self.base_path)
@@ -53,7 +49,8 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         
     @depends(before=test_can_read_feature_file)
     def test_deals_with_no_data_file(self):
-        text = self.file_processor.read_file(self.file_scenario_with_data_path)
+        processor = FeatureFileProcessor(self.withoutDataFile.base_path) 
+        text = processor.read_file(self.file_scenario_with_data_path)
         self.file_processor.create_scenarios(text)
         scenario = self.file_processor.parsed_feature().scenario_at(1)
         with self.assertRaises(NoDataFileException) as e:
