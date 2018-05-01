@@ -12,7 +12,8 @@ with open('LICENSE') as f:
 setup(
     name='PyCPD',
     version='0.0.1',
-    description='Joining the power of BDD and Data-Driven Testing in a lightweight command line tool written in Python',
+    description='''Joining the power of BDD and Data-Driven Testing
+     in a lightweight command line tool written in Python''',
     long_description=readme,
     author='Joao Farias',
     author_email='jgfarias42@gmail.com',
