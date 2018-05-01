@@ -47,13 +47,16 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertEqual(feature_file.feature_title(), self.feature_title)
         self.assertEqual(feature_file.number_of_scenarios(),
                          self.simpleFileData.number_of_scenarios())
-        for scenario_number in range(1, self.simpleFileData.number_of_scenarios()):
+        scenario_range = range(1, self.simpleFileData.number_of_scenarios())
+        for scenario_number in scenario_range:
             self.assertIsInstance(
                 feature_file.scenario_at(scenario_number), Scenario)
-            self.assertEqual(feature_file.scenario_at(
-                scenario_number), self.simpleFileData.scenario_text(scenario_number))
-            self.assertEqual(feature_file.scenario_at(
-                scenario_number).data_file(), self.simpleFileData.csv_file(scenario_number))
+            self.assertEqual(
+                feature_file.scenario_at(scenario_number),
+                self.simpleFileData.scenario_text(scenario_number))
+            self.assertEqual(
+                feature_file.scenario_at(scenario_number).data_file(),
+                self.simpleFileData.csv_file(scenario_number))
 
     @depends(before=test_can_read_feature_file)
     def test_deals_with_no_data_file(self):
@@ -89,7 +92,9 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertEqual(scenario, printable_scenario)
 
     def __create_scenario_at_position__(self, scenario_position):
-        return Scenario(self.simpleFileData.scenario_text(scenario_position), self.base_path)
+        return Scenario(
+            self.simpleFileData.scenario_text(scenario_position),
+            self.base_path)
 
 
 if __name__ == '__main__':
