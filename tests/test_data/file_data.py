@@ -48,7 +48,7 @@ class FileData(object):
         pass
 
     def feature_text(self):
-        scenarios = reduce(lambda x, y: x + self.scenario_text(y),
+        scenarios = reduce(lambda curr, acc: curr + self.scenario_text(acc),
                            range(1, self.number_of_scenarios() + 1), [])
         return [self.feature_title()] + scenarios
 

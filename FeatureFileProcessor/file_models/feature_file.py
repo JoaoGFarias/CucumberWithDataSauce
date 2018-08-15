@@ -1,4 +1,5 @@
 from .scenario import Scenario
+from functools import reduce
 
 
 class FeatureFile(object):
@@ -16,3 +17,10 @@ class FeatureFile(object):
 
     def scenario_at(self, position):
         return self.scenarios[position-1]
+
+    def feature_file_as_text(self):
+        printable_scenarios = [scenario.printable_scenario()
+                               for scenario in self.scenarios]
+        scenarios_as_text = ["\n" + "\n".join(scenario)
+                             for scenario in printable_scenarios]
+        return self.feature_title() + "\n" + "\n".join(scenarios_as_text)

@@ -103,3 +103,4 @@ ENV/
 # Visual Studio Config
 .vscode
 .noseids
+cover/

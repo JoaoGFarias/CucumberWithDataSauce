@@ -4,3 +4,4 @@ nose2dep
 nose-timer
 sphinx
 coverage
+configargparse

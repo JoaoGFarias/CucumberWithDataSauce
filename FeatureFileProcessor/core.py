@@ -16,7 +16,8 @@ class FeatureFileProcessor(object):
     def parsed_feature(self):
         return self.feature_file
 
-    def create_scenarios(self, text):
+    def create_scenarios(self, text, file_path=None):
+        file_path = file_path if file_path else self.base_path
         current_scenario = []
         scenarios = []
         feature_title = ""
@@ -34,7 +35,7 @@ class FeatureFileProcessor(object):
         self.feature_file = FeatureFile(
             title=feature_title,
             file_scenarios=scenarios,
-            data_path=self.base_path)
+            data_path=file_path)
         return self.feature_file
 
     def __is_scenario(self, line):

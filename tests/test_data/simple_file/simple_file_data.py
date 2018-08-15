@@ -25,7 +25,7 @@ class SimpleFileData(FileData):
     def first_scenario(self):
         return [
             "Scenario: Buy last coffee" +
-            self.data_file_mark().substitute(file=self.csv_file(scenario_number=1)),
+            self.data_mark_at_scenario(scenario_number=1),
             "Given there are 1 coffees left in the machine",
             "And I have deposited 1$",
             "When I press the coffee button",
@@ -44,7 +44,7 @@ class SimpleFileData(FileData):
     def second_scenario(self):
         return [
             "Scenario: Buy first coffee " +
-            self.data_file_mark().substitute(file=self.csv_file(scenario_number=2)),
+            self.data_mark_at_scenario(scenario_number=2),
             "Given there are 2 coffees left in the machine",
             "And I have deposited 1$",
             "When I press the coffee button",
@@ -65,3 +65,7 @@ class SimpleFileData(FileData):
         return {
             1: self.first_scenario_printable_table(),
         }[scenario_position]
+
+    def data_mark_at_scenario(self, scenario_number):
+        return self.data_file_mark().substitute(
+            file=self.csv_file(scenario_number))

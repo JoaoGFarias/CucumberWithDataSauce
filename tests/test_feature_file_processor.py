@@ -20,26 +20,31 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.base_path = self.simpleFileData.base_path
         self.simple_file_path = self.simpleFileData.file_path()
         self.feature_title = self.simpleFileData.feature_title()
-        self.data_file_mark = self.simpleFileData.data_file_mark()
-        self.first_scenario = self.simpleFileData.first_scenario()
-        self.second_scenario_data_file = self.simpleFileData.csv_file(
-            scenario_number=2)
-        self.second_scenario = self.simpleFileData.second_scenario()
         self.simple_file = self.simpleFileData.feature_text()
         self.withoutDataFile = self.testData.getFileData(
             self.testData.WITHOUT_DATA_FILE_DATA)
         self.scenario_witout_data = self.withoutDataFile.scenario_text(1)
-        self.file_scenario_with_data_path = self.withoutDataFile.name()
+        self.file_scenario_without_data_path = self.withoutDataFile.name()
 
     def setUp(self):
         self.file_processor = FeatureFileProcessor(self.base_path)
 
     def test_can_read_feature_file(self):
+        """
+        Checks if the FeatureFileProcessor objects can read
+        a file in given path
+        TODO: Assert text
+        """
         returned_text = self.file_processor.read_file(self.simple_file_path)
         self.assertEqual(returned_text, self.simple_file)
 
     @depends(before=test_can_read_feature_file)
     def test_create_scenarios_objects(self):
+        """
+        Checks if the FeatureFileProcessor objects can parse a .feature text
+        into a FeatureFile object, composed of Scenario objectsself.
+        TODO: Assert text
+        """
         text = self.file_processor.read_file(self.simple_file_path)
         self.file_processor.create_scenarios(text)
         feature_file = self.file_processor.parsed_feature()
@@ -60,8 +65,12 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
 
     @depends(before=test_can_read_feature_file)
     def test_deals_with_no_data_file(self):
+        """
+        Checks if a NoDataFileException is raised when trying to
+        extract data from a scenario without data file
+        """
         processor = FeatureFileProcessor(self.withoutDataFile.base_path)
-        text = processor.read_file(self.file_scenario_with_data_path)
+        text = processor.read_file(self.file_scenario_without_data_path)
         self.file_processor.create_scenarios(text)
         scenario = self.file_processor.parsed_feature().scenario_at(1)
         with self.assertRaises(NoDataFileException) as e:
