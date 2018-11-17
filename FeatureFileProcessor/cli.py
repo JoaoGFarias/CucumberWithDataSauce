@@ -1,3 +1,4 @@
+import FeatureFileProcessor
 import configargparse
 import os
 
@@ -5,9 +6,9 @@ import os
 class Parser(object):
 
     def __init__(self):
-        self.default_config_file = [os.path.join(
-            os.path.dirname(__file__),
-            "default_config.yaml.dist")]
+        self.default_config_file = [os.path.join(os.path.dirname(__file__),
+                                                 "..",
+                                                 "default_config.yaml.dist")]
 
     def collect_arguments(self):
         parser = configargparse.ArgParser(
@@ -19,5 +20,9 @@ class Parser(object):
 
 
 if __name__ == '__main__':  # pragma: no cover
-    args = Parser().collectArguments()
+    args = Parser().collect_arguments()
+    text = FeatureFileProcessor(
+        "D:\GitHub\PyCPD\tests\test_data\simple_file").read_file(
+            self.simple_file_path)
     print(args)
+    print(text)

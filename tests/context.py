@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from FeatureFileProcessor import *
-from CucumberInjector import *
+from FeatureFileProcessor import *  # Remove import *
+# from CucumberInjector import *  # Remove import *
 import sys
 import os
 sys.path.insert(0, os.path.abspath(

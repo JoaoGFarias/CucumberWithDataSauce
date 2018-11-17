@@ -17,7 +17,7 @@ setup(
     long_description=readme,
     author='Joao Farias',
     author_email='jgfarias42@gmail.com',
-    url='https://github.com/JoaoGFarias/PyCPD',
+    url='https://github.com/JoaoGFarias/CucumberInjector',
     license=license,
     packages=find_packages(
         exclude=(
