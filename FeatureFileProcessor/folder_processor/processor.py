@@ -20,7 +20,6 @@ class FolderProcessor(object):
 
     def process_data_folder(self):
         for path in list(Path(self.data_folder).glob('**/*.feature')):
-            #parsed_file = self.process_file(path).feature_title()
             parsed_file = self.process_file(path).feature_file_as_text()
             target_file_path = self.discover_target_file_path(path)
             Path.mkdir(target_file_path.parent, parents=True, exist_ok=True)

@@ -1,4 +1,5 @@
-import FeatureFileProcessor
+from FeatureFileProcessor import FeatureFileProcessor
+from .folder_processor.processor import FolderProcessor
 import configargparse
 import os
 
@@ -14,16 +15,25 @@ class Parser(object):
             self.default_config_file = path
 
     def collect_arguments(self):
-        parser = configargparse.ArgParser(
+        args = configargparse.ArgParser(
             description='Dummy args',
             default_config_files=self.default_config_file)
+        args.add('--dummy_arg', type=float, help='Dummy value')
+        args.add('--target',
+                 help='Folder where the processed files are stored')
+        args.add('--base',
+                 help='Folder where the original files are stored')
+        return vars(args.parse_known_args()[0])
 
-        parser.add('--dummy_arg', type=float, help='Dummy value')
-        parser.add('--target',
-                   help='Folder where the processed files are stored')
-        parser.add('--base',
-                   help='Folder where the original files are stored')
-        return vars(parser.parse_known_args()[0])
+    def run(self):
+        args = self.collect_arguments()
+        file_processor = FolderProcessor(
+            data_folder=args['base'],
+            target_folder=args['target'],
+            file_processor=FeatureFileProcessor(args['base']))
+        file_processor.prepare_target_folder()
+        file_processor.process_data_folder()
+        return file_processor
 
 
 if __name__ == '__main__':  # pragma: no cover
