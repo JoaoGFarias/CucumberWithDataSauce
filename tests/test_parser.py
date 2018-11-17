@@ -11,7 +11,8 @@ class ParserTestSuite(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.parser = Parser()
-        self.default_result = {'dummy_arg': -666}
+        self.default_result = {'dummy_arg': -
+                               666, 'target': None, 'base': None}
         pass
 
     def setUp(self):
@@ -26,7 +27,9 @@ class ParserTestSuite(unittest.TestCase):
                              "test_data",
                              "custom_config.yaml")]
         parser = Parser(path)
-        self.assertEqual(parser.collect_arguments(), {'dummy_arg': 12})
+        self.assertEqual(parser.collect_arguments(), {'dummy_arg': 12,
+                                                      'target': "test/target",
+                                                      'base': "test/base"})
         pass
 
 

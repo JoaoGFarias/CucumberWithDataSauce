@@ -19,6 +19,10 @@ class Parser(object):
             default_config_files=self.default_config_file)
 
         parser.add('--dummy_arg', type=float, help='Dummy value')
+        parser.add('--target',
+                   help='Folder where the processed files are stored')
+        parser.add('--base',
+                   help='Folder where the original files are stored')
         return vars(parser.parse_known_args()[0])
 
 
