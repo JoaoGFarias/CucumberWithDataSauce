@@ -35,9 +35,10 @@ class ParserTestSuite(unittest.TestCase):
         path = self.custom_path()
         parser = Parser(path)
         processor = parser.run()
+        target_folder = os.path.join(os.path.dirname(__file__), "..", "temp")
         self.assertEqual(
             self.number_files_in_directory(
-                processor.target_folder),
+                target_folder),
             3)
         processor.delete_target_folder()
         pass
