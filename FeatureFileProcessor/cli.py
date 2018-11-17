@@ -5,17 +5,20 @@ import os
 
 class Parser(object):
 
-    def __init__(self):
-        self.default_config_file = [os.path.join(os.path.dirname(__file__),
-                                                 "..",
-                                                 "default_config.yaml.dist")]
+    def __init__(self, path=None):
+        if not path:
+            self.default_config_file = [os.path.join(os.path.dirname(__file__),
+                                                     "..",
+                                                     "default_config.yaml.dist")]
+        else:
+            self.default_config_file = path
 
     def collect_arguments(self):
         parser = configargparse.ArgParser(
             description='Dummy args',
             default_config_files=self.default_config_file)
 
-        parser.add_argument('--dummy_arg', type=float, help='Dummy value')
+        parser.add('--dummy_arg', type=float, help='Dummy value')
         return vars(parser.parse_known_args()[0])
 
 
