@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from FeatureFileProcessor import *  # Remove import *
-from pycpd import *
+from cucumberinjector import *
 
 import sys
 import os
