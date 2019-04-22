@@ -7,22 +7,15 @@ import os
 class Parser(object):
 
     def __init__(self, path=None):
-        if not path:
-            self.default_config_file = [os.path.join(os.path.dirname(__file__),
-                                                    "..",
-                                                    "default_config.yaml.dist")]
-        else:
-            self.default_config_file = path
+        self.default_config_file = path if path else [
+            os.path.join(os.path.dirname(__file__), "..", "default_config.yaml.dist")]
 
     def collect_arguments(self):
         args = configargparse.ArgParser(
-            description='Dummy args',
+            description='Parser arguments',
             default_config_files=self.default_config_file)
-        args.add('--dummy_arg', type=float, help='Dummy value')
-        args.add('--target',
-                help='Folder where the processed files are stored')
-        args.add('--base',
-                help='Folder where the original files are stored')
+        args.add('--target', help='Folder where the processed files are stored')
+        args.add('--base', help='Folder where the original files are stored')
         return vars(args.parse_known_args()[0])
 
     def run(self):

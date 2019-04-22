@@ -1,1 +1,2 @@
-dummy_arg=-666
+base=PATH_TO_FEATURE_FILES
+target=PATH_TO_SAVE_PARSED_FILES
