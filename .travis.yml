@@ -5,6 +5,7 @@ python:
 before_install:
   - pip install safety
   - safety check -r requirements.txt
+  - chmod +x Makefile
 
 install:
   - make init

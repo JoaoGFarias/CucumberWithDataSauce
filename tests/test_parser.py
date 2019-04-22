@@ -4,7 +4,7 @@ from .context import Parser
 from .test_data.test_data_interface import TestDataInterface
 import unittest
 import os
-
+from pyquickhelper.pycode import skipif_travis
 
 class ParserTestSuite(unittest.TestCase):
 
@@ -28,16 +28,17 @@ class ParserTestSuite(unittest.TestCase):
         parser = Parser(path)
 
         self.assertEqual(parser.collect_arguments(), {
-            'target': "/host/GitHub/PyCPD/temp",
+            'target': "~/sandbox/temp",
             'base': "/host/GitHub/PyCPD/tests/test_data"
         })
         pass
 
+    @skipif_travis("Travis folder not located correctly")
     def test_calls_folder_processor(self):
         path = self.custom_path()
         parser = Parser(path)
         processor = parser.run()
-        target_folder = os.path.join(os.path.dirname(__file__), "..", "temp")
+        target_folder = "~/sandbox/temp"
         self.assertEqual(
             self.number_files_in_directory(
                 target_folder),
