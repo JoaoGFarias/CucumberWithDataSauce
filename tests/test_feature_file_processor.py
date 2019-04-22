@@ -51,7 +51,7 @@ class FeatureFileProcessorTestSuite(unittest.TestCase):
         self.assertIsInstance(feature_file, FeatureFile)
         self.assertEqual(feature_file.feature_title(), self.feature_title)
         self.assertEqual(feature_file.number_of_scenarios(),
-                         self.simpleFileData.number_of_scenarios())
+                        self.simpleFileData.number_of_scenarios())
         scenario_range = range(1, self.simpleFileData.number_of_scenarios())
         for scenario_number in scenario_range:
             self.assertIsInstance(

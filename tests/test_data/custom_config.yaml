@@ -1,3 +1,3 @@
 dummy_arg=12
-target=D:\GitHub\PyCPD\temp
-base=D:\GitHub\PyCPD\tests\test_data
+target=/host/GitHub/PyCPD/temp
+base=/host/GitHub/PyCPD/tests/test_data

@@ -11,8 +11,7 @@ class ParserTestSuite(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.parser = Parser()
-        self.default_result = {'dummy_arg': -
-                               666, 'target': None, 'base': None}
+        self.default_result = {'dummy_arg': -666, 'target': None, 'base': None}
         pass
 
     def setUp(self):
@@ -27,8 +26,8 @@ class ParserTestSuite(unittest.TestCase):
         parser = Parser(path)
 
         self.assertEqual(parser.collect_arguments(), {'dummy_arg': 12.0,
-                                                      'target': "D:\\GitHub\\PyCPD\\temp",
-                                                      'base': "D:\\GitHub\\PyCPD\\tests\\test_data"})
+                                                    'target': "/host/GitHub/PyCPD/temp",
+                                                    'base': "/host/GitHub/PyCPD/tests/test_data"})
         pass
 
     def test_calls_folder_processor(self):
@@ -45,8 +44,8 @@ class ParserTestSuite(unittest.TestCase):
 
     def custom_path(self):
         return [os.path.join(os.path.dirname(__file__),
-                             "test_data",
-                             "custom_config.yaml")]
+                            "test_data",
+                            "custom_config.yaml")]
 
     def number_files_in_directory(self, target_path):
         return sum([len(files) for _, _, files in os.walk(target_path)])
