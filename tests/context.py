@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from FeatureFileProcessor import *  # Remove import *
+from pycpd import *
 
 import sys
 import os

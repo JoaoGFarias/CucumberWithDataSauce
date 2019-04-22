@@ -1,5 +1,5 @@
 from FeatureFileProcessor import FeatureFileProcessor
-from .folder_processor.processor import FolderProcessor
+from FeatureFileProcessor.folder_processor.processor import FolderProcessor
 import configargparse
 import os
 
@@ -8,7 +8,7 @@ class Parser(object):
 
     def __init__(self, path=None):
         self.default_config_file = path if path else [
-            os.path.join(os.path.dirname(__file__), "..", "default_config.yaml.dist")]
+            os.path.join(os.path.dirname(__file__),  "default_config.yaml.dist")]
 
     def collect_arguments(self):
         args = configargparse.ArgParser(
@@ -27,3 +27,6 @@ class Parser(object):
         file_processor.prepare_target_folder()
         file_processor.process_data_folder()
         return file_processor
+
+if __name__ == '__main__':  # pragma: no cover
+    Parser().run()
