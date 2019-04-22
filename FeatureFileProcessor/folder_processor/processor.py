@@ -14,7 +14,7 @@ class FolderProcessor(object):
     def prepare_target_folder(self):
         try:
             self.delete_target_folder()
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             pass
         os.makedirs(self.target_folder)
 

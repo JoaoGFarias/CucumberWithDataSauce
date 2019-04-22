@@ -5,7 +5,6 @@ from .context import FeatureFile
 from .context import Scenario
 from .context import NoDataFileException
 import unittest
-from nose2dep.core import depends
 
 from .test_data.test_data_interface import TestDataInterface
 

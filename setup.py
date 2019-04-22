@@ -10,7 +10,7 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='PyCPD',
+    name='Cucumber Injector',
     version='0.0.1',
     description='''Joining the power of BDD and Data-Driven Testing
      in a lightweight command line tool written in Python''',

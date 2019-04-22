@@ -9,7 +9,6 @@ class TestDataInterface(object):
         self._setup_base_path()
         self._setup_target_path()
         self._setup_files()
-        pass
 
     def _setup_base_path(self):
         self.base_path = os.path.join(
@@ -25,7 +24,8 @@ class TestDataInterface(object):
             files = json.load(f)['files']
             for key in files.keys():
                 setattr(self, key, files[key])
-    
+        pass
+        
     def getFileData(self, fileName):
         return {
             self.SIMPLE_FILE_DATA: SimpleFileData(self.base_path),
