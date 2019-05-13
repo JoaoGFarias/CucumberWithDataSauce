@@ -29,7 +29,7 @@ class ParserTestSuite(unittest.TestCase):
 
         self.assertEqual(parser.collect_arguments(), {
             'target': "~/sandbox/temp",
-            'base': "/host/GitHub/PyCPD/tests/test_data"
+            'base': "/media/joao/DATA/GitHub/CucumberInjector/tests/test_data"
         })
         pass
 
