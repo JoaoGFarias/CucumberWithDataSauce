@@ -19,7 +19,7 @@ class Scenario(object):
     def data_file(self):
         try:
             return self.csv[0]
-        except IndexError as e:
+        except IndexError:
             raise NoDataFileException
 
     def outline(self):

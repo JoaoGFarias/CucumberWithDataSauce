@@ -7,15 +7,19 @@ class WithoutDataFile(FileData):
         dir_name = os.path.dirname(__file__)
         FileData.__init__(self, base_path, dir_name, 'without_data_file')
 
+    @classmethod
     def name(self):
         return "file_scenario_without_data.feature"
 
+    @classmethod
     def number_of_scenarios(self):
         return 1
 
+    @classmethod
     def feature_title(self):
         return 'Scenario: Buy last coffee'
 
+    @classmethod
     def first_scenario(self):
         return [
             "Scenario: Buy last coffee",

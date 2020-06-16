@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from .context import Parser
-from .test_data.test_data_interface import TestDataInterface
 import unittest
 import os
 from pyquickhelper.pycode import skipif_travis
@@ -46,11 +45,13 @@ class ParserTestSuite(unittest.TestCase):
         processor.delete_target_folder()
         pass
 
+    @classmethod
     def custom_path(self):
         return [os.path.join(os.path.dirname(__file__),
                             "test_data",
                             "custom_config.yaml")]
 
+    @classmethod
     def number_files_in_directory(self, target_path):
         return sum([len(files) for _, _, files in os.walk(target_path)])
 

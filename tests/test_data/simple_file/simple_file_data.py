@@ -7,18 +7,22 @@ class SimpleFileData(FileData):
         dir_name = os.path.dirname(__file__)
         FileData.__init__(self, base_path, dir_name, 'simple_file')
 
+    @classmethod
     def name(self):
         return "simple_file.feature"
 
+    @classmethod
     def number_of_scenarios(self):
         return 2
 
+    @classmethod
     def csv_file(self, scenario_number):
         return {
             1: "scenario_1_file",
             2: "scenario_2_file"
         }[scenario_number]
 
+    @classmethod
     def feature_title(self):
         return 'Feature: Serve coffee'
 
@@ -31,6 +35,7 @@ class SimpleFileData(FileData):
             "When I press the coffee button",
             "Then I should be served a coffee"]
 
+    @classmethod
     def first_scenario_expected_outline(self):
         return [
             ["button_label", "coffe_label"],

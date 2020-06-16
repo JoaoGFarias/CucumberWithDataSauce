@@ -38,8 +38,10 @@ class FeatureFileProcessor(object):
             data_path=file_path)
         return self.feature_file
 
+    @classmethod
     def __is_scenario(self, line):
         return line.startswith("Scenario:")
 
+    @classmethod
     def __is_feature(self, line):
         return line.startswith("Feature:")
